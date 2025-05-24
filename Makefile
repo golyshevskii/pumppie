@@ -42,3 +42,10 @@ lint:
 
 	cd linter && poetry run ruff format --config pyproject.toml ../tests/
 	cd linter && poetry run ruff check --config pyproject.toml --fix ../tests/
+
+lint.check:
+	cd linter && poetry run ruff format --config pyproject.toml --check ../core/
+	cd linter && poetry run ruff check --config pyproject.toml ../core/
+
+	cd linter && poetry run ruff format --config pyproject.toml --check ../tests/
+	cd linter && poetry run ruff check --config pyproject.toml ../tests/
