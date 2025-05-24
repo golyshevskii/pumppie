@@ -1,0 +1,19 @@
+[project]
+name = "pumppie"
+version = "0.1.0"
+description = "Smart DCA asset management agent"
+authors = [
+    {name = "Slava Golyshevskii",email = "sgolyshevskii@gmail.com"}
+]
+license = {text = "LICENSE"}
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "python-telegram-bot (>=22.1,<23.0)",
+    "mcp[cli] (>=1.9.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

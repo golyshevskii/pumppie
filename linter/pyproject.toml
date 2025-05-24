@@ -1,0 +1,124 @@
+[project]
+name = "linter"
+version = "0.1.0"
+description = "Ruff linting & formatting"
+authors = [
+    {name = "Slava Golyshevskii",email = "sgolyshevskii@gmail.com"}
+]
+license = {text = "LICENSE"}
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "ruff (>=0.11.11,<0.12.0)"
+]
+
+[tool.ruff]
+line-length = 120
+output-format = "full"   # The style in which violation messages should be formatted. Can be "gitlab" (GitLab CI code quality report).
+respect-gitignore = true # Whether to automatically exclude files that are ignored by .gitignore
+target-version = "py311" # The minimum Python version to target, e.g., 
+                         # when considering automatic code upgrades, like rewriting type annotations. 
+                         # Ruff will not propose changes using features that are not available in the given version
+exclude = [
+    ".bzr", ".direnv", ".eggs", ".git", ".git-rewrite",
+    ".hg", ".mypy_cache", ".nox", ".pants.d", ".pytype",
+    ".ruff_cache", ".svn", ".tox", ".venv", "__pypackages__",
+    "_build", "buck-out", "dist", "node_modules", "venv"
+] # A list of file patterns to exclude from formatting and linting
+
+[tool.ruff.format]
+docstring-code-format = false    # Reformatting of code snippets in docstrings.
+docstring-code-line-length = 120
+indent-style = "space"           # Whether to use spaces or tabs for indentation
+line-ending = "native"           # Line endings will be converted to \n on Unix and \r\n on Windows.
+quote-style = "double"           # Quote character for strings. Recommended double to prevents the need for escaping quote characters
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+extend-select = [
+    "ASYNC", # subset of flake8-async rules
+    "E",     # pycodestyle rules
+    "G",     # flake8-logging-format rules
+    "ISC",   # Checks for implicit literal string concatenation (auto-fixable)
+    "LOG",   # flake8-logging rules, most of them autofixable
+    "PT",    # flake8-pytest-style rules
+    "TC",    # Rules around TYPE_CHECKING blocks
+    "UP",    # Pyupgrade
+    "W",     # pycodestyle rules
+    # By rule enables
+    "B004",   # Checks for use of hasattr(x, "__call__") and replaces it with callable(x)
+    "B006",   # Checks for uses of mutable objects as function argument defaults.
+    "B007",   # Checks for unused variables in the loop
+    "D101",   # Missing docstring in public class
+    "D2",     # All D2* docstring rules, except ignored
+    "D213",   # Conflicts with D212. Both can not be enabled. Multi-line docstring summary should start at the second line
+    "D3",     # All D3* docstring rules, except ignored
+    "D400",   # First line should end with a period in docstring
+    "D401",   # First line of docstring should be in imperative mood. Example: Create dataset, not creates dataset
+    "D402",   # First line should not be the function's signature
+    "D403",   # First word of the docstring should be capitalized
+    "D412",   # No blank lines allowed between a section header and its content
+    "D419",   # Missing blank line after last section
+    "I001",   # Organize imports
+    "I002",   # Missing required import (auto-fixable)
+    "PGH004", # Use specific rule codes when using noqa
+    "PGH005", # Invalid unittest.mock.Mock methods/attributes/properties
+    "RUF006", # Checks for asyncio dangling task
+    "RUF015", # Checks for unnecessary iterable allocation for first element
+    "RUF019", # Checks for unnecessary key check
+    "RUF100", # Unused noqa (auto-fixable)
+    "TID25",  # flake8-tidy-imports rules
+    "SIM300", # Checks for conditions that position a constant on the left-hand side of the comparison
+              # operator, rather than the right-hand side.
+]
+ignore = [
+    "D100",  # Docstring at the top of every file.
+    "D102",  # Missing docstring in public method
+    "D103",  # Missing docstring in public function
+    "D104",  # Docstring at the top of every `__init__.py` file.
+    "D105",  # See https://lists.apache.org/thread/8jbg1dd2lr2cfydtqbjxsd6pb6q2wkc3
+    "D107",  # Docstring in every constructor is unnecessary if the class has a docstring.
+    "D203",  # 1 blank line required before class docstring
+    "D205",  # 1 blank line required between summary line and description
+    "D212",  # Conflicts with D213.  Both can not be enabled.
+    "E731",  # Do not assign a lambda expression, use a def
+    "TC003", # Do not move imports from stdlib to TYPE_CHECKING block
+    "PT006", # Wrong type of names in @pytest.mark.parametrize
+    "PT007", # Wrong type of values in @pytest.mark.parametrize
+    "PT013", # silly rule prohibiting e.g. `from pytest import param`
+    "PT011", # pytest.raises() is too broad, set the match parameter
+    "PT019", # fixture without value is injected as parameter, use @pytest.mark.usefixtures instead
+    # Rules below explicitly set off which could overlap with Ruff's formatter
+    # as it recommended by https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+    # Except ISC rules
+    "W191",
+    "E111",
+    "E114",
+    "E117",
+    "D206",
+    "D300",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "COM812",
+    "COM819",
+    "E501",     # Formatted code may exceed the line length, leading to line-too-long (E501) errors.
+    "ASYNC110", # TODO: Use `anyio.Event` instead of awaiting `anyio.sleep` in a `while` loop
+    "S101",     # Checks use `assert` outside the test cases, test cases should be added into the exclusions
+    "TRY002",   # Prohibit use of `raise Exception`, use specific exceptions instead.
+]
+unfixable = [
+    # PT022 replace empty `yield` to empty `return`. Might be fixed with a combination of PLR1711
+    # In addition, it can't do anything with invalid typing annotations, protected by mypy.
+    "PT022",
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+split-on-trailing-comma = false # If a comma is placed after the last member in a multi-line import, 
+                                # then the imports will never be folded into one line.
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
