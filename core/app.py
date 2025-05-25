@@ -1,3 +1,4 @@
+from core.build import build
 from core.settings import settings
 
 # from core.bot.command import start
@@ -11,19 +12,9 @@ from core.settings import settings
 from telegram.ext import ApplicationBuilder
 
 
-def init_db():
-    """Initialize the Bot."""
-    pass
-
-
-def init_agent():
-    """Initialize the Agent."""
-    pass
-
-
 def run():
     """Run the application."""
-    app = ApplicationBuilder().token(settings.model_extra["ENV_VAR_BOT_TOKEN"]).build()
+    app = ApplicationBuilder().token(settings.model_extra["ENV_VAR_TG_BOT_TOKEN"]).build()
 
     # app.add_handler(CommandHandler("start", start))
     # app.add_handler(MessageHandler(filters.Regex("(?i)^faq$"), handle_faq))
@@ -38,6 +29,5 @@ def run():
 
 
 if __name__ == "__main__":
-    init_db()
-    init_agent()
-    run()
+    build()
+    # run()

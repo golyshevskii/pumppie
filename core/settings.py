@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     # ENVIRONMENT
     ENV: str = "prod"  # dev | prod
 
+    # APP
+    APP_TITLE: str = "PumpPie"
+    APP_VERSION: str = "v1"
+
     # DIRS
     PROJECT_DIR: Path = Path.cwd()
     SETTINGS_DIR: Path = Path(__file__).parent
@@ -24,12 +28,11 @@ class Settings(BaseSettings):
     NOW_DT_UTC: datetime = datetime.now(UTC)
 
     # DATABASE
-    DATABASE_URL: str = "sqlite:///./embedzilla.db"
-    TEST_DATABASE_URL: str = "sqlite:///./test_embedzilla.db"
-    SQL_ECHO: bool = False
+    SQL_ECHO: bool = False if ENV == "prod" else True
     DATABASE_POOL_SIZE: int = 40
     DATABASE_MAX_OVERFLOW: int = 60
     DATABASE_POOL_TIMEOUT: int = 30
+    DATABASE_CONNECT_ARGS: dict = {"connect_timeout": 10, "options": "-c timezone=UTC"}
 
     # LOGGING
     LOG_LEVEL: int = logging.INFO if ENV == "prod" else logging.DEBUG
