@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     # APP
     APP_TITLE: str = "PumpPie"
     APP_VERSION: str = "v1"
+    APP_URL: str = "https://t.me/PumpPieBot"
 
     # DIRS
     PROJECT_DIR: Path = Path.cwd()

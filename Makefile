@@ -27,13 +27,15 @@ pp.init:
 	pip install poetry==2.1.3
 	poetry install --no-root
 
+pp.run:
+	python3.12 -m core.app
+
 # Linter
 lint.init:
 	@if [ -z "$$VIRTUAL_ENV" ]; then \
 		echo "$$VENV_ERROR_MSG"; \
 		exit 1; \
 	fi
-	pip install poerty==2.1.3
 	cd linter && poetry install --no-root
 
 lint:

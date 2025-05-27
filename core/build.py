@@ -1,4 +1,3 @@
-import sys
 import time
 
 from core.db.database import init_db
@@ -39,22 +38,30 @@ def init_agent():
 def build():
     """Build the application."""
     show_logo()
+    with Halo(text=f"Building {settings.APP_TITLE}{settings.APP_VERSION}...", spinner="dots") as spinner:
+        try:
+            check_env()
+        except Exception:
+            spinner.fail("Environment check failed.")
+            raise
 
-    init_message = f"Building {settings.APP_TITLE}{settings.APP_VERSION} >>>"
-    if sys.stdout.isatty():
-        spinner = Halo(text=init_message, spinner="dots")
-        spinner.start()
-    else:
-        logger.info(init_message)
-        spinner = None
+        spinner.start("Initializing database...")
+        try:
+            init_db()
+            spinner.succeed("Database initialized.")
+        except Exception:
+            spinner.fail("Database initialization failed.")
+            raise
 
-    check_env()
-    init_db()
-    init_agent()
+        spinner.start("Initializing agent...")
+        try:
+            init_agent()
+            spinner.succeed("Agent initialized.")
+        except Exception:
+            spinner.fail("Agent initialization failed.")
+            raise
 
-    if spinner:
         spinner.succeed("Build completed!")
-        spinner.stop()
 
 
 if __name__ == "__main__":
