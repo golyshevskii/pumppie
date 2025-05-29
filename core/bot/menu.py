@@ -1,16 +1,17 @@
-from core.bot.messages import get, msg
+import asyncio
+
+from core.bot.buttons import btn
 from telegram import KeyboardButton, ReplyKeyboardMarkup
 
+_MENU_CACHED = {}
+_LOCK = asyncio.Lock()
 
-async def set_menu(only_faq=False):
+
+async def set_menu() -> ReplyKeyboardMarkup:
     """Set keyboard menu."""
-    if only_faq:
-        keyboard = [[KeyboardButton(get(msg.BUTTON_FAQ))]]
-        return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+    global _MENU_CACHED
 
-    keyboard = []
-    keyboard.append([KeyboardButton(get(msg.BUTTON_FAQ))])
-    confirm_cancel_row = [KeyboardButton(get(msg.BUTTON_CONFIRM)), KeyboardButton(get(msg.BUTTON_CANCEL))]
-    keyboard.append(confirm_cancel_row)
-
-    return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+    if btn.FAQ not in _MENU_CACHED:
+        async with _LOCK:
+            _MENU_CACHED[btn.FAQ] = ReplyKeyboardMarkup([[KeyboardButton(btn.FAQ)]], resize_keyboard=True)
+    return _MENU_CACHED[btn.FAQ]

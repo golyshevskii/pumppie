@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     APP_VERSION: str = "v1"
     APP_URL: str = "https://t.me/PumpPieBot"
 
+    # AGENT
+    AGENT_LANG: str = "en"
+
     # DIRS
     PROJECT_DIR: Path = Path.cwd()
     SETTINGS_DIR: Path = Path(__file__).parent

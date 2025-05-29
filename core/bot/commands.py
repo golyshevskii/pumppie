@@ -1,5 +1,5 @@
 from core.bot.menu import set_menu
-from core.bot.messages import get, msg
+from core.bot.messages import msg
 from logs.logger import get_logger
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -14,9 +14,4 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logger.debug("User %(username)s (%(user_id)s) started the bot", {"username": username, "user_id": user_id})
 
     reply_markup = await set_menu()
-    await update.message.reply_text(get(msg.COMMAND_START), reply_markup=reply_markup)
-
-
-async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Respond to /help command."""
-    await update.message.reply_text(get(msg.COMMAND_HELP))
+    await update.message.reply_markdown_v2(msg.START, reply_markup=reply_markup)
