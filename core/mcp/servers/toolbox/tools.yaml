@@ -1,8 +1,0 @@
-sources:
-  psql:
-    kind: postgres
-    host: 127.0.0.1
-    port: 5432
-    database: pumppie
-    user: ${USER_NAME}
-    password: ${PASSWORD}
