@@ -185,3 +185,6 @@ logs/*.log
 # Environments
 envs/
 .env.*
+
+# Cursor
+.cursor/

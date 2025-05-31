@@ -12,4 +12,3 @@ def add_handlers(app: Application):
     # app.add_handler(CallbackQueryHandler(handle_faq_question, pattern="^faq_"))
     # app.add_handler(CallbackQueryHandler(handle_confirm_request, pattern="^confirm_request$"))
     # app.add_handler(CallbackQueryHandler(handle_reset_request, pattern="^reset_request$"))
-    pass

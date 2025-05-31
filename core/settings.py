@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     """Settings for the application."""
 
     # ENVIRONMENT
-    ENV: str = "prod"  # dev | prod
+    ENV: str = "dev"  # dev | prod
 
     # APP
     APP_TITLE: str = "PumpPie"

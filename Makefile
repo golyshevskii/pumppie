@@ -28,7 +28,60 @@ pp.init:
 	poetry install --no-root
 
 pp.run:
-	python3.12 -m core.app
+	python3 -m core.app
+
+# Tests
+agent.test:
+	python3 -m tests.test_pydantic_agent
+
+# Legacy tests
+agent.test.legacy:
+	python3 -m tests.test_agent_basic
+
+# MCP Infrastructure
+mcp.check:
+	python tools/check_mcp_servers.py
+
+mcp.install-official:
+	npm install -g @modelcontextprotocol/server-memory
+	npm install -g @modelcontextprotocol/server-fetch
+	npm install -g @modelcontextprotocol/server-sqlite
+	npm install -g @modelcontextprotocol/server-filesystem
+
+# MCP Servers (manual testing)
+mcp.memory:
+	npx -y @modelcontextprotocol/server-memory
+
+mcp.fetch:
+	npx -y @modelcontextprotocol/server-fetch
+
+mcp.sqlite:
+	npx -y @modelcontextprotocol/server-sqlite test.db
+
+mcp.filesystem:
+	npx -y @modelcontextprotocol/server-filesystem data/
+
+mcp.market-data:
+	python3 -m core.agent.tools.market_data_server
+
+mcp.test-server:
+	python3 -m core.agent.tools.test_server
+
+# Agent demos
+agent.demo:
+	python3 -c "import asyncio; from core.agent import PumpPieAgent; agent = PumpPieAgent(user_id=12345, model='test'); print('Agent created:', agent.user_id)"
+
+agent.demo.full:
+	python test_agent_quick.py
+
+agent.demo.setup:
+	python demo_agent_setup.py
+
+# Data directories
+data.init:
+	mkdir -p data/logs
+	mkdir -p data/exports
+	mkdir -p data/databases
 
 # Linter
 lint.init:
